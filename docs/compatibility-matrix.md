@@ -18,6 +18,18 @@
 | DSH | oui | `.agents/skills` | dsh bundle/plugin | local | native |
 | Agent Skills générique | oui | `.agents/skills` | Agent Plugins v1 si supporté | variable | core |
 
-## Preuve à ajouter
+## Protocole et preuve à ajouter
 
-Pour chaque ligne, un test doit vérifier : découverte, chargement de la skill, exécution du mode lecture seule, génération, validation et refus d’une installation non confirmée. Les versions de l’agent et du système doivent être enregistrées dans le rapport.
+Le protocole reproductible, le prompt à donner à un agent indépendant et le
+fichier Markdown à remplir sont dans [`tests/README.md`](../tests/README.md) et
+[`tests/compatibility-report-template.md`](../tests/compatibility-report-template.md).
+
+Pour chaque ligne, un test doit vérifier : découverte, chargement de la skill,
+exécution du mode lecture seule, génération, validation et refus d’une
+installation non confirmée. Les versions de l’agent et du système doivent être
+enregistrées dans le rapport.
+
+Le rapport doit distinguer le niveau déclaré (`core`, `configured`, `native`,
+`handoff`) de la preuve obtenue (`documented`, `smoke-tested`, `verified`,
+`handoff`, `blocked` ou `unknown`). Une documentation fournisseur seule ne
+suffit pas à classer un hôte `verified`.

@@ -58,7 +58,7 @@ adapters/               notes d'adaptation par hôte
 scripts/                CLI et outils sans dépendance externe
 data/                   catalogue machine-readable des hôtes
 docs/                   architecture, sécurité et compatibilité
-tests/                  tests et fixtures
+tests/                  tests automatisés, protocole public et template de rapport
 ```
 
 ## Modèle de compatibilité

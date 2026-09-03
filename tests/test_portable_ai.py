@@ -22,6 +22,19 @@ def run_cli(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
 
 
 class PortableAITests(unittest.TestCase):
+    def test_public_compatibility_test_kit_is_present(self) -> None:
+        instructions = ROOT / "tests" / "README.md"
+        template = ROOT / "tests" / "compatibility-report-template.md"
+        self.assertTrue(instructions.is_file())
+        self.assertTrue(template.is_file())
+        instruction_text = instructions.read_text(encoding="utf-8")
+        template_text = template.read_text(encoding="utf-8")
+        self.assertIn("Prompt prêt à copier", instruction_text)
+        self.assertIn("portable-ai-public", instruction_text)
+        self.assertIn("Bloc prêt à reporter", template_text)
+        self.assertIn("generic-agent-skills", template_text)
+        self.assertIn("TBD", template_text)
+
     def test_source_is_valid(self) -> None:
         result = run_cli("validate", ".")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
