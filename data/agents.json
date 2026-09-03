@@ -1,0 +1,162 @@
+{
+  "schema_version": "0.1.0",
+  "generated_at": "2026-09-03",
+  "agents": [
+    {
+      "id": "arena-agent-mode",
+      "label": "Arena Agent Mode",
+      "kind": "cloud-handoff",
+      "support_level": "handoff",
+      "project_skill_path": null,
+      "user_skill_path": null,
+      "native_package": null,
+      "mcp": false,
+      "installable": false,
+      "notes": "Use repository connection, generated files, prompt handoff or downloadable package; no public local skill installer documented."
+    },
+    {
+      "id": "claude-ai",
+      "label": "Claude.ai / Claude cloud",
+      "kind": "cloud-handoff",
+      "support_level": "configured",
+      "project_skill_path": ".claude/skills",
+      "user_skill_path": null,
+      "native_package": ".claude-plugin",
+      "mcp": "account-connectors",
+      "installable": false,
+      "notes": "Cloud sessions use account-enabled skills or repository skills; local ~/.claude state does not transfer automatically."
+    },
+    {
+      "id": "claude-code",
+      "label": "Claude Code",
+      "kind": "local-coding-agent",
+      "support_level": "native",
+      "project_skill_path": ".claude/skills",
+      "user_skill_path": "~/.claude/skills",
+      "native_package": ".claude-plugin",
+      "mcp": ".mcp.json",
+      "installable": true,
+      "notes": "Native skills, plugins, hooks, agents and MCP; Claude-specific extensions stay outside the portable core."
+    },
+    {
+      "id": "hermes",
+      "label": "Hermes Agent",
+      "kind": "local-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.hermes/skills",
+      "native_package": "plugin.yaml",
+      "mcp": "config.yaml:mcp_servers",
+      "installable": true,
+      "notes": "Supports portable Agent Plugins and native Python plugins; native packages may register tools, hooks and skills."
+    },
+    {
+      "id": "openclaw",
+      "label": "OpenClaw",
+      "kind": "local-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.agents/skills",
+      "native_package": "openclaw.plugin.json",
+      "mcp": "openclaw.json:mcp.servers",
+      "installable": true,
+      "notes": "Workspace skills have high precedence; native plugins and Agent Plugins bundles are separate formats."
+    },
+    {
+      "id": "opencode",
+      "label": "OpenCode",
+      "kind": "local-coding-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.agents/skills",
+      "native_package": ".opencode/plugins",
+      "mcp": "opencode.json:mcp",
+      "installable": true,
+      "notes": "Also discovers .opencode/skills and Claude-compatible skill locations; MCP is local or remote."
+    },
+    {
+      "id": "codex",
+      "label": "Codex CLI / IDE",
+      "kind": "local-coding-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.agents/skills",
+      "native_package": ".codex-plugin",
+      "mcp": "config.toml:mcp_servers",
+      "installable": true,
+      "notes": "AGENTS.md and Agent Skills are first-class; agents/openai.yaml is optional UI and dependency metadata."
+    },
+    {
+      "id": "chatgpt",
+      "label": "ChatGPT / ChatGPT Work",
+      "kind": "cloud-handoff",
+      "support_level": "configured",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": null,
+      "native_package": ".codex-plugin",
+      "mcp": "remote-app",
+      "installable": false,
+      "notes": "Use a skill or OpenAI plugin; app availability, plan, workspace and admin permissions apply."
+    },
+    {
+      "id": "mistral-vibe",
+      "label": "Mistral Vibe CLI",
+      "kind": "local-coding-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.vibe/skills",
+      "native_package": ".vibe",
+      "mcp": "config.toml",
+      "installable": true,
+      "notes": "Agent Skills, AGENTS.md, custom agents and tool permissions; trust folders affect project discovery."
+    },
+    {
+      "id": "antigravity",
+      "label": "Google Antigravity CLI / IDE",
+      "kind": "local-coding-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.gemini/antigravity-cli/skills",
+      "native_package": "plugin.json",
+      "mcp": "mcp_config.json",
+      "installable": true,
+      "notes": "Plugins may include skills, agents, rules, hooks and MCP; native paths are not identical to Agent Skills paths."
+    },
+    {
+      "id": "zcode",
+      "label": "ZCode by Z.AI",
+      "kind": "local-coding-agent",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.zcode/skills",
+      "native_package": "plugin",
+      "mcp": ".agents/mcp.json",
+      "installable": true,
+      "notes": "Supports external skill import and native MCP management; plugin skill layout is flat."
+    },
+    {
+      "id": "dsh",
+      "label": "DeepSeek Harness / DSH",
+      "kind": "local-agent-framework",
+      "support_level": "native",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": null,
+      "native_package": "dsh.bundle / TypeScript plugin",
+      "mcp": "profile configuration",
+      "installable": true,
+      "notes": "Everything-is-a-plugin architecture; pin DSH versions and keep native Cordis code in the adapter."
+    },
+    {
+      "id": "generic-agent-skills",
+      "label": "Generic Agent Skills client",
+      "kind": "portable-standard",
+      "support_level": "core",
+      "project_skill_path": ".agents/skills",
+      "user_skill_path": "~/.agents/skills",
+      "native_package": "plugin.json",
+      "mcp": "mcp.json",
+      "installable": true,
+      "notes": "Best-effort target for clients implementing Agent Skills or Agent Plugins; verify discovery and permissions."
+    }
+  ]
+}

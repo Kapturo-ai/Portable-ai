@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1.0",
+  "registry_kind": "static-git",
+  "generated_at": "2026-09-03",
+  "policy": {
+    "auto_install": false,
+    "require_hash": true,
+    "require_review": true,
+    "allow_secret_literals": false
+  },
+  "packages": [
+    {
+      "id": "kapturo-ai/sticker-card",
+      "version": "0.1.0",
+      "source": "https://github.com/Kapturo-ai/sticker-card",
+      "status": "draft",
+      "trust": "unverified",
+      "integrity_sha256": null,
+      "artifacts": ["agent-skills", "agent-plugins-v1", "claude-code", "codex"],
+      "tested_agents": [],
+      "permissions": [],
+      "review": {
+        "reviewed": false,
+        "reviewer": null,
+        "reviewed_at": null
+      }
+    }
+  ]
+}

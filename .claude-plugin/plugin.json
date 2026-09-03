@@ -1,0 +1,6 @@
+{
+  "name": "sticker-card",
+  "version": "0.1.0",
+  "description": "Repository portability workflow for Claude Code.",
+  "skills": "./skills/"
+}

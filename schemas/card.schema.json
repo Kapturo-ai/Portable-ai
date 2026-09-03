@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Kapturo-ai/sticker-card/schemas/card.schema.json",
+  "title": "Sticker Card",
+  "description": "Deterministic portability report for an inspected repository.",
+  "type": "object",
+  "required": ["schema_version", "source", "runtimes", "package_manifests", "agents", "security"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["name", "path_kind"],
+      "properties": {
+        "name": { "type": "string" },
+        "path_kind": { "const": "local-repository" },
+        "readme": { "type": "boolean" },
+        "git": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "runtimes": { "type": "array", "items": { "type": "string" } },
+    "package_manifests": { "type": "array", "items": { "type": "string" } },
+    "context_files": { "type": "array", "items": { "type": "string" } },
+    "existing_agent_assets": { "type": "array", "items": { "type": "string" } },
+    "agents": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["support_level", "installable"],
+        "properties": {
+          "support_level": { "type": "string" },
+          "installable": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "security": {
+      "type": "object",
+      "required": ["secrets_copied", "execution_during_inspection"],
+      "properties": {
+        "secrets_copied": { "const": false },
+        "execution_during_inspection": { "const": false },
+        "default_action": { "const": "confirm" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
