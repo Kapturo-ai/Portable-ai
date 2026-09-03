@@ -10,9 +10,9 @@
   },
   "packages": [
     {
-      "id": "kapturo-ai/sticker-card",
+      "id": "kapturo-ai/portable-ai",
       "version": "0.1.0",
-      "source": "https://github.com/Kapturo-ai/sticker-card",
+      "source": "https://github.com/Kapturo-ai/Portable-ai",
       "status": "draft",
       "trust": "unverified",
       "integrity_sha256": null,

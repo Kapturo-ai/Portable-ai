@@ -2,13 +2,13 @@
 
 ## Contrat principal
 
-`sticker-card` est un convertisseur de dépôt, pas un nouveau runtime d’agent. Il produit une représentation déclarative et des sorties adaptées à l’environnement cible.
+`portable-ai` est un convertisseur de dépôt, pas un nouveau runtime d’agent. Il produit une représentation déclarative et des sorties adaptées à l’environnement cible.
 
 ```text
 repository
    │
    ├── inspect (lecture seule, aucune exécution)
-   │       └── sticker-card.json
+   │       └── portable-ai.json
    │
    ├── build
    │       ├── Agent Skills
@@ -28,7 +28,7 @@ repository
 
 ## Source de vérité
 
-Le package généré possède une skill canonique sous `skills/sticker-card/`. Les copies destinées à `.agents/skills/` et `.claude/skills/` sont des projections. Le validator vérifie qu’elles ont le même hash.
+Le package généré possède une skill canonique sous `skills/portable-ai/`. Les copies destinées à `.agents/skills/` et `.claude/skills/` sont des projections. Le validator vérifie qu’elles ont le même hash.
 
 Les champs spécifiques à un fournisseur n’entrent pas dans `SKILL.md` lorsqu’ils changent la sémantique portable. Ils vont dans `adapters/<agent>/`, dans un manifest natif ou dans le catalogue.
 

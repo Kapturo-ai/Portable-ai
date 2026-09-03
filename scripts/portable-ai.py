@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
+PROJECT_NAME = "portable-ai"
 CATALOG_PATH = ROOT / "data" / "agents.json"
 SKIP_DIRS = {".git", ".hg", ".svn", "node_modules", ".venv", "venv", "target", "dist", "build", "__pycache__"}
 MANIFEST_NAMES = {
@@ -187,12 +188,12 @@ def inspect_repo(repo: Path) -> dict[str, Any]:
 
 def make_skill(source_name: str) -> str:
     return f"""---
-name: sticker-card
+name: portable-ai
 description: Inspect and adapt the {source_name} repository for portable AI-agent use. Detect runtimes and conventions, generate compatibility metadata and host projections, then validate everything before installation. Use for repository portability, Agent Skills, Claude Code, Codex, ChatGPT, Hermes, OpenClaw, OpenCode, Mistral Vibe, Antigravity, ZCode, DSH, or Arena handoff tasks.
 license: MIT
 compatibility: Core mode requires only file access; optional scripts, MCP servers and native plugins require their host-specific setup.
 metadata:
-  project: sticker-card
+  project: portable-ai
   source_repository: {safe_name(source_name)}
   security: confirmation-required
 ---
@@ -202,7 +203,7 @@ metadata:
 ## Rules
 
 1. Inspect before execution. Do not run project code during repository inspection.
-2. Read `sticker-card.json` and classify each target using its support level.
+2. Read `portable-ai.json` and classify each target using its support level.
 3. Keep `AGENTS.md` as project context and keep this skill focused on the repeatable workflow.
 4. Generate host files only through the converter; never hand-edit generated projections.
 5. Do not copy `.env`, private keys, tokens or machine-specific credentials.
@@ -223,7 +224,7 @@ def adapter_text(agent: dict[str, Any], source_name: str) -> str:
     if agent["kind"] == "cloud-handoff":
         action = "Use the generated package, connect the repository or import the skill through the product UI. Do not attempt a local filesystem install."
     else:
-        action = f"Default project destination: `{project}/sticker-card/`. The CLI prints a plan and requires `--apply` before copying."
+        action = f"Default project destination: `{project}/portable-ai/`. The CLI prints a plan and requires `--apply` before copying."
     return f"""# {agent['label']}
 
 - **Support level**: `{agent['support_level']}`
@@ -239,9 +240,9 @@ def adapter_text(agent: dict[str, Any], source_name: str) -> str:
 
 ## Safe workflow
 
-1. Review `sticker-card.json` and this adapter note.
+1. Review `portable-ai.json` and this adapter note.
 2. Review the host's permissions and trust prompt.
-3. Use `sticker-card install ... --agent {agent['id']}` to print a plan.
+3. Use `portable-ai install ... --agent {agent['id']}` to print a plan.
 4. Apply only after explicit confirmation with `--apply` and an explicit destination when needed.
 
 {action}
@@ -253,28 +254,30 @@ The portable skill remains the source of behavior. This file documents only host
 def build_package(repo: Path, out_dir: Path, force: bool = False) -> Path:
     repo = repo.resolve()
     card = inspect_repo(repo)
-    package = out_dir.resolve() / safe_name(repo.name)
+    source_name = PROJECT_NAME if repo == ROOT else repo.name
+    card["source"]["name"] = source_name
+    package = out_dir.resolve() / safe_name(source_name)
     if package.exists():
         if not force:
             raise ValueError(f"Output already exists: {package} (use --force to replace it)")
         shutil.rmtree(package)
     package.mkdir(parents=True)
 
-    json_write(package / "sticker-card.json", card)
+    json_write(package / "portable-ai.json", card)
     json_write(package / "compatibility.json", {"schema_version": "0.1.0", "agents": load_catalog()})
     json_write(
         package / "plugin.json",
         {
             "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-            "name": "sticker-card",
+            "name": "portable-ai",
             "version": "0.1.0",
-            "description": f"Portable agent adaptation package for {repo.name}.",
+            "description": f"Portable agent adaptation package for {source_name}.",
         },
     )
     json_write(
         package / ".claude-plugin" / "plugin.json",
         {
-            "name": "sticker-card",
+            "name": "portable-ai",
             "version": "0.1.0",
             "description": "Portable repository adaptation workflow for Claude Code.",
             "skills": "./skills/",
@@ -283,42 +286,42 @@ def build_package(repo: Path, out_dir: Path, force: bool = False) -> Path:
     json_write(
         package / ".codex-plugin" / "plugin.json",
         {
-            "name": "sticker-card",
+            "name": "portable-ai",
             "version": "0.1.0",
             "description": "Portable repository adaptation workflow for Codex and ChatGPT.",
             "skills": "./skills/",
         },
     )
 
-    skill = make_skill(repo.name)
-    text_write(package / "skills" / "sticker-card" / "SKILL.md", skill)
-    text_write(package / ".agents" / "skills" / "sticker-card" / "SKILL.md", skill)
-    text_write(package / ".claude" / "skills" / "sticker-card" / "SKILL.md", skill)
+    skill = make_skill(source_name)
+    text_write(package / "skills" / "portable-ai" / "SKILL.md", skill)
+    text_write(package / ".agents" / "skills" / "portable-ai" / "SKILL.md", skill)
+    text_write(package / ".claude" / "skills" / "portable-ai" / "SKILL.md", skill)
     text_write(
         package / "AGENTS.md",
         f"""# AGENTS.md
 
-This package adapts the `{repo.name}` repository for AI-agent portability.
+This package adapts the `{source_name}` repository for AI-agent portability.
 
-- Read `sticker-card.json` before selecting an adapter.
-- Use the portable skill under `skills/sticker-card/`.
+- Read `portable-ai.json` before selecting an adapter.
+- Use the portable skill under `skills/portable-ai/`.
 - Treat `.agents/skills/` and `.claude/skills/` as generated projections.
 - Do not execute source code during inspection.
 - Do not copy secrets or apply an install without explicit confirmation.
-- Validate with `python3 scripts/sticker-card.py validate .` when the bootstrap CLI is available.
+- Validate with `python3 scripts/portable-ai.py validate .` when the bootstrap CLI is available.
 """,
     )
     text_write(package / "CLAUDE.md", "@AGENTS.md\n\nClaude-specific additions belong in the Claude adapter documentation.\n")
     text_write(package / "GEMINI.md", "@AGENTS.md\n\nUse .agents/skills for the portable skill projection.\n")
     for agent in load_catalog():
-        text_write(package / "adapters" / agent["id"] / "README.md", adapter_text(agent, repo.name))
+        text_write(package / "adapters" / agent["id"] / "README.md", adapter_text(agent, source_name))
     text_write(
         package / "README.md",
-        f"""# Portable package: {repo.name}
+        f"""# Portable package: {source_name}
 
-Generated by `sticker-card` without executing the source repository.
+Generated by `portable-ai` without executing the source repository.
 
-- Read `sticker-card.json` for the deterministic inspection card.
+- Read `portable-ai.json` for the deterministic inspection card.
 - Read `compatibility.json` for the host catalog.
 - Read `adapters/` for host-specific instructions.
 - Run the validator before any install.
@@ -380,24 +383,24 @@ def validate_package(path: Path) -> list[str]:
     if not path.is_dir():
         return [f"Not a directory: {path}"]
 
-    card_path = path / "sticker-card.json"
+    card_path = path / "portable-ai.json"
     if card_path.exists():
         try:
             card = json.loads(card_path.read_text(encoding="utf-8"))
             for key in ("schema_version", "source", "runtimes", "package_manifests", "agents", "security"):
                 if key not in card:
-                    errors.append(f"sticker-card.json missing key: {key}")
+                    errors.append(f"portable-ai.json missing key: {key}")
             if card.get("security", {}).get("secrets_copied") is not False:
                 errors.append("security.secrets_copied must be false")
             if card.get("security", {}).get("execution_during_inspection") is not False:
                 errors.append("security.execution_during_inspection must be false")
         except (OSError, json.JSONDecodeError) as exc:
-            errors.append(f"Invalid sticker-card.json: {exc}")
+            errors.append(f"Invalid portable-ai.json: {exc}")
 
     skill_paths = [
-        path / "skills" / "sticker-card" / "SKILL.md",
-        path / ".agents" / "skills" / "sticker-card" / "SKILL.md",
-        path / ".claude" / "skills" / "sticker-card" / "SKILL.md",
+        path / "skills" / "portable-ai" / "SKILL.md",
+        path / ".agents" / "skills" / "portable-ai" / "SKILL.md",
+        path / ".claude" / "skills" / "portable-ai" / "SKILL.md",
     ]
     hashes: list[str] = []
     for skill_path in skill_paths:
@@ -446,15 +449,15 @@ def print_plan(package: Path, agent: dict[str, Any], scope: str, target: Path, a
 
     if scope == "project":
         relative = agent.get("project_skill_path")
-        destination = target / relative / "sticker-card"
+        destination = target / relative / "portable-ai"
     else:
         relative = (agent.get("user_skill_path") or "").replace("~/", "")
         if not relative:
             print(f"{agent['label']} has no documented user-level skill path; use project scope or handoff.", file=sys.stderr)
             return 2
-        destination = target / relative / "sticker-card"
+        destination = target / relative / "portable-ai"
 
-    source = package / "skills" / "sticker-card"
+    source = package / "skills" / "portable-ai"
     print(f"Agent:       {agent['label']} ({agent['id']})")
     print(f"Scope:       {scope}")
     print(f"Source:      {source}")
@@ -568,7 +571,7 @@ def command_install(args: argparse.Namespace) -> int:
 
 
 def parser() -> argparse.ArgumentParser:
-    root = argparse.ArgumentParser(prog="sticker-card", description="Inspect and adapt repositories for portable AI agents.")
+    root = argparse.ArgumentParser(prog="portable-ai", description="Inspect and adapt repositories for portable AI agents.")
     sub = root.add_subparsers(dest="command", required=True)
 
     inspect_parser = sub.add_parser("inspect", help="Read-only repository inspection")

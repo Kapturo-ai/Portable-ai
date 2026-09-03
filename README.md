@@ -1,15 +1,15 @@
-# sticker-card
+# portable-ai
 
 **Universal Agent Portability Kit**
 
-`sticker-card` transforme un dépôt open source en package portable pour agents IA. Il inspecte un dépôt, détecte ses dépendances et ses conventions, produit une carte de compatibilité, génère les fichiers Agent Skills et prépare les adaptateurs propres à chaque hôte.
+`portable-ai` transforme un dépôt open source en package portable pour agents IA. Il inspecte un dépôt, détecte ses dépendances et ses conventions, produit une carte de compatibilité, génère les fichiers Agent Skills et prépare les adaptateurs propres à chaque hôte.
 
 Le projet ne promet pas que tous les agents possèdent les mêmes capacités. Il distingue le cœur portable, les capacités optionnelles et les intégrations natives.
 
 ## Objectifs
 
 - inspecter un dépôt sans l'exécuter ;
-- produire une carte machine-readable (`sticker-card.json`) ;
+- produire une carte machine-readable (`portable-ai.json`) ;
 - générer des skills `SKILL.md` conformes à Agent Skills ;
 - préparer `AGENTS.md`, `CLAUDE.md` et les packages de plugin ;
 - décrire les différences entre Arena, Claude, Codex, Hermes, OpenClaw, OpenCode, Mistral Vibe, Antigravity, ZCode et DSH ;
@@ -25,25 +25,25 @@ Le dépôt démarre volontairement avec un package de référence et un CLI Pyth
 
 ```bash
 # Inspecter un dépôt
-python3 scripts/sticker-card.py inspect /chemin/vers/repo
+python3 scripts/portable-ai.py inspect /chemin/vers/repo
 
 # Générer un package portable
-python3 scripts/sticker-card.py build /chemin/vers/repo --out ./dist --force
+python3 scripts/portable-ai.py build /chemin/vers/repo --out ./dist --force
 
 # Valider un package généré
-python3 scripts/sticker-card.py validate ./dist/nom-du-repo
+python3 scripts/portable-ai.py validate ./dist/nom-du-repo
 
 # Voir les agents connus
-python3 scripts/sticker-card.py list-agents
+python3 scripts/portable-ai.py list-agents
 
 # Préparer une installation sans rien modifier
-python3 scripts/sticker-card.py install ./dist/nom-du-repo --agent codex --scope project
+python3 scripts/portable-ai.py install ./dist/nom-du-repo --agent codex --scope project
 
 # Appliquer après revue explicite
-python3 scripts/sticker-card.py install ./dist/nom-du-repo --agent codex --scope project --apply
+python3 scripts/portable-ai.py install ./dist/nom-du-repo --agent codex --scope project --apply
 
 # Vérifier les outils disponibles localement
-python3 scripts/sticker-card.py doctor .
+python3 scripts/portable-ai.py doctor .
 ```
 
 `install` est en mode plan par défaut. `--apply` est obligatoire pour écrire dans un répertoire cible. Les surfaces cloud ou conversationnelles produisent un guide de transfert au lieu de modifier le système local.

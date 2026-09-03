@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Kapturo-ai/sticker-card/schemas/card.schema.json",
-  "title": "Sticker Card",
+  "$id": "https://github.com/Kapturo-ai/Portable-ai/schemas/portable-ai.schema.json",
+  "title": "Portable AI",
   "description": "Deterministic portability report for an inspected repository.",
   "type": "object",
   "required": ["schema_version", "source", "runtimes", "package_manifests", "agents", "security"],

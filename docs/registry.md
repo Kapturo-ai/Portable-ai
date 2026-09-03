@@ -1,6 +1,6 @@
 # Registre Git statique
 
-Le premier registre de `sticker-card` est volontairement un dossier versionné plutôt qu’une API. Il peut être relu par GitHub, une CI ou une future interface sans ajouter de serveur ni de credentials.
+Le premier registre de `portable-ai` est volontairement un dossier versionné plutôt qu’une API. Il peut être relu par GitHub, une CI ou une future interface sans ajouter de serveur ni de credentials.
 
 ## Contrat d’une entrée
 

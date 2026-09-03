@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CLI = ROOT / "scripts" / "sticker-card.py"
+CLI = ROOT / "scripts" / "portable-ai.py"
 
 
 def run_cli(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
@@ -21,7 +21,7 @@ def run_cli(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
     )
 
 
-class StickerCardTests(unittest.TestCase):
+class PortableAITests(unittest.TestCase):
     def test_source_is_valid(self) -> None:
         result = run_cli("validate", ".")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -82,7 +82,7 @@ class StickerCardTests(unittest.TestCase):
                 "--apply",
             )
             self.assertEqual(apply.returncode, 0, apply.stdout + apply.stderr)
-            self.assertTrue((target / ".agents/skills/sticker-card/SKILL.md").is_file())
+            self.assertTrue((target / ".agents/skills/portable-ai/SKILL.md").is_file())
 
     def test_handoff_never_writes_local_files(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -92,7 +92,7 @@ class StickerCardTests(unittest.TestCase):
             output = Path(directory) / "out"
             build = run_cli("build", ".", "--out", str(output))
             self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
-            package = output / "sticker-card"
+            package = output / "portable-ai"
             target = Path(directory) / "target"
             result = run_cli(
                 "install",

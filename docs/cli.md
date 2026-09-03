@@ -1,6 +1,6 @@
 # CLI de référence
 
-Le bootstrap actuel est `scripts/sticker-card.py` et ne dépend d’aucun package Python externe.
+Le bootstrap actuel est `scripts/portable-ai.py` et ne dépend d’aucun package Python externe.
 
 ## Commandes
 

@@ -4,4 +4,4 @@ Chaque dossier décrit la projection d’un package vers un hôte. Un adaptateur
 
 Les adaptateurs cloud/conversationnels produisent un handoff. Ils ne prétendent pas pouvoir modifier la machine locale.
 
-Les adaptateurs natifs sont générés par `scripts/sticker-card.py build` et validés comme des artefacts séparés.
+Les adaptateurs natifs sont générés par `scripts/portable-ai.py build` et validés comme des artefacts séparés.
